@@ -5,6 +5,7 @@
   "description": "MathPath: a tiny offline adaptive math practice app. Open index.html.",
   "scripts": {
     "test": "node --test",
-    "start": "node serve.js"
+    "start": "node serve.js",
+    "start:winery": "node winery/server.js"
   }
 }

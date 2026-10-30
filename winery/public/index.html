@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Winery Finder</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header>
+    <h1>🍷 Winery Finder</h1>
+    <p>Find wineries near you, read reviews and share yours.</p>
+  </header>
+
+  <main>
+    <section class="panel" aria-label="Location">
+      <div class="row">
+        <button id="locate" type="button">📍 Use my location</button>
+        <form id="place-form" class="inline">
+          <label class="sr-only" for="place">City or ZIP code</label>
+          <input id="place" type="text" placeholder="…or type a city or ZIP" maxlength="200">
+          <button type="submit">Search</button>
+        </form>
+      </div>
+      <div class="row">
+        <button id="discover" type="button" disabled>🔎 Find more nearby (OpenStreetMap)</button>
+        <label>Within
+          <select id="radius">
+            <option value="10">10 miles</option>
+            <option value="25" selected>25 miles</option>
+            <option value="50">50 miles</option>
+            <option value="100">100 miles</option>
+            <option value="">anywhere</option>
+          </select>
+        </label>
+      </div>
+      <p id="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <div class="columns">
+      <section aria-label="Wineries">
+        <h2 id="list-title">Top rated wineries</h2>
+        <ul id="list" class="cards"></ul>
+        <details class="panel">
+          <summary>Add a winery</summary>
+          <form id="add-form" class="stack">
+            <label>Name <input name="name" required maxlength="100"></label>
+            <label>Address <input name="address" maxlength="200"></label>
+            <label>Website <input name="website" type="url" maxlength="300" placeholder="https://"></label>
+            <label>Description <textarea name="description" rows="2" maxlength="500"></textarea></label>
+            <div class="row">
+              <label>Latitude <input name="lat" type="number" step="any" min="-90" max="90" required></label>
+              <label>Longitude <input name="lng" type="number" step="any" min="-180" max="180" required></label>
+            </div>
+            <button type="button" id="fill-coords">Use my current search location</button>
+            <button type="submit">Add winery</button>
+            <p id="add-status" role="status" aria-live="polite"></p>
+          </form>
+        </details>
+      </section>
+
+      <section aria-label="Winery details" id="detail" class="panel" hidden>
+        <h2 id="d-name"></h2>
+        <p id="d-meta"></p>
+        <p id="d-desc"></p>
+        <p id="d-link"></p>
+        <h3>Reviews</h3>
+        <ul id="reviews" class="reviews"></ul>
+        <form id="review-form" class="stack">
+          <h3>Write a review</h3>
+          <label>Your name <input name="author" required maxlength="50"></label>
+          <label>Rating
+            <select name="rating" required>
+              <option value="">Choose…</option>
+              <option value="5">★★★★★ Excellent</option>
+              <option value="4">★★★★☆ Very good</option>
+              <option value="3">★★★☆☆ Average</option>
+              <option value="2">★★☆☆☆ Poor</option>
+              <option value="1">★☆☆☆☆ Terrible</option>
+            </select>
+          </label>
+          <label>Comment <textarea name="comment" rows="3" maxlength="1000"></textarea></label>
+          <button type="submit">Post review</button>
+          <p id="review-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>

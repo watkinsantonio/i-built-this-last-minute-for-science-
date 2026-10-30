@@ -1,0 +1,33 @@
+:root { --wine: #722f37; --wine-dark: #4a1c22; --bg: #faf6f1; --ink: #2b2226; --muted: #6d6168; }
+* { box-sizing: border-box; }
+body { margin: 0; font: 16px/1.5 system-ui, sans-serif; background: var(--bg); color: var(--ink); }
+header { background: var(--wine); color: #fff; padding: 1rem 1.5rem; }
+header h1 { margin: 0; font-size: 1.6rem; }
+header p { margin: .2rem 0 0; opacity: .9; }
+main { max-width: 1100px; margin: 0 auto; padding: 1rem; }
+.panel { background: #fff; border: 1px solid #e6dcd3; border-radius: 10px; padding: 1rem; margin-bottom: 1rem; }
+.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
+@media (max-width: 800px) { .columns { grid-template-columns: 1fr; } }
+.row { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; margin-bottom: .5rem; }
+.inline { display: flex; gap: .4rem; flex: 1; min-width: 220px; }
+.inline input { flex: 1; }
+.stack { display: grid; gap: .6rem; margin-top: .6rem; }
+label { display: grid; gap: .2rem; font-size: .9rem; color: var(--muted); }
+.row > label { display: flex; align-items: center; gap: .4rem; }
+input, select, textarea { font: inherit; padding: .4rem .5rem; border: 1px solid #cdbfb4; border-radius: 6px; color: var(--ink); }
+button { font: inherit; padding: .45rem .9rem; border: 0; border-radius: 6px; background: var(--wine); color: #fff; cursor: pointer; }
+button:hover:not(:disabled) { background: var(--wine-dark); }
+button:disabled { opacity: .5; cursor: not-allowed; }
+.cards, .reviews { list-style: none; padding: 0; margin: 0 0 1rem; display: grid; gap: .6rem; }
+.card { background: #fff; border: 1px solid #e6dcd3; border-radius: 10px; padding: .8rem 1rem; cursor: pointer; }
+.card:hover, .card:focus-within, .card.selected { border-color: var(--wine); }
+.card h3 { margin: 0; font-size: 1.05rem; }
+.card button.link { background: none; color: inherit; padding: 0; text-align: left; font-weight: 600; font-size: 1.05rem; }
+.meta { color: var(--muted); font-size: .9rem; margin: .1rem 0; }
+.stars { color: #c28a00; letter-spacing: 1px; }
+.reviews li { border-top: 1px solid #eee3da; padding-top: .5rem; }
+.reviews .who { font-weight: 600; }
+#status, #add-status, #review-status { min-height: 1.4em; margin: .3rem 0 0; color: var(--muted); }
+.error { color: #b00020 !important; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+summary { cursor: pointer; font-weight: 600; }

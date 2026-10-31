@@ -7,6 +7,8 @@ A tiny adaptive math practice app, built to show off to a group. No install, no 
 - **Easiest:** double-click `index.html` (any modern browser). It works offline.
 - **Or serve it:** `npm start` then open http://localhost:8080 (or `node serve.js 3000`).
 
+- **Desktop app:** see [`desktop/README.md`](desktop/README.md) (`cd desktop && npm install && npm start`, or build an installer with `npm run dist:win|mac|linux`).
+
 Tip for presenting: press F11 for full screen. The text is large for projectors.
 
 ## What it does

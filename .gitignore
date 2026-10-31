@@ -1,3 +1,5 @@
 winery/data/
 food/data/
 node_modules/
+desktop/app/
+desktop/dist/

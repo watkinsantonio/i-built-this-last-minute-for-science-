@@ -3,7 +3,9 @@ const test = require('node:test');
 const assert = require('node:assert');
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 const zlib = require('zlib');
+const { prepare } = require('./prepare');
 const { renderIcon, encodePng, crc32 } = require('./make-icon');
 const security = require('./security');
 
@@ -83,12 +85,24 @@ test('security: network requests are blocked for every web scheme', () => {
   }
 });
 
-test('security: index.html carries exactly the CSP from security.js', () => {
-  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+test('security: the desktop copy of index.html carries the CSP; the root web page is untouched', () => {
+  const rootHtml = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  assert.ok(!/Content-Security-Policy/.test(rootHtml), 'root page must not carry the CSP (file:// risk)');
+  const dest = fs.mkdtempSync(path.join(os.tmpdir(), 'mathpath-csp-'));
+  prepare(path.join(__dirname, '..'), dest);
+  const html = fs.readFileSync(path.join(dest, 'index.html'), 'utf8');
+  fs.rmSync(dest, { recursive: true, force: true });
   const m = html.match(/<meta http-equiv="Content-Security-Policy" content="([^"]+)">/);
   assert.ok(m, 'CSP meta tag missing');
   assert.strictEqual(m[1], security.CSP);
+  assert.ok(html.indexOf(m[0]) < html.indexOf('<script'), 'CSP must come before scripts');
   assert.ok(!/unsafe-inline|unsafe-eval/.test(security.CSP));
+});
+
+test('desktop: engines and README state the Node version Electron needs', () => {
+  assert.strictEqual(pkg.engines.node, '>=22.12.0');
+  const readme = fs.readFileSync(path.join(__dirname, 'README.md'), 'utf8');
+  assert.ok(/Node\.js\]\([^)]*\) 22\.12\+/.test(readme));
 });
 
 test('security: the web app has nothing the CSP would block', () => {

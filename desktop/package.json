@@ -5,6 +5,9 @@
   "description": "MathPath desktop app (Electron wrapper around the web version)",
   "author": "MathPath",
   "main": "main.js",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "prepare-app": "node prepare.js",
     "start": "node prepare.js && electron .",

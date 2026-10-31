@@ -5,7 +5,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { pathToFileURL } = require('url');
-const { prepare, FILES } = require('./prepare');
+const { prepare, withCsp, FILES } = require('./prepare');
 const { isAllowedNavigation } = require('./nav');
 
 test('prepare: copies the web files and replaces stale output', () => {
@@ -14,9 +14,12 @@ test('prepare: copies the web files and replaces stale output', () => {
   fs.writeFileSync(path.join(dest, 'stale.txt'), 'old');
   prepare(root, dest);
   assert.deepStrictEqual(fs.readdirSync(dest).sort(), FILES.slice().sort());
-  for (const f of FILES) {
+  for (const f of FILES.filter((x) => x !== 'index.html')) {
     assert.deepStrictEqual(fs.readFileSync(path.join(dest, f)), fs.readFileSync(path.join(root, f)));
   }
+  // index.html is the same page plus the CSP meta tag.
+  const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  assert.strictEqual(fs.readFileSync(path.join(dest, 'index.html'), 'utf8'), withCsp(html));
   fs.rmSync(dest, { recursive: true, force: true });
 });
 

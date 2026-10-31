@@ -3,7 +3,7 @@
 An Electron wrapper around the MathPath web app. It runs offline in its own window; no browser needed.
 The web files in the repo root are the source of truth: `prepare.js` copies them into `desktop/app/` (git-ignored) before every run or build.
 
-You need [Node.js](https://nodejs.org) 18+ and internet for the first `npm install` (it downloads Electron).
+You need [Node.js](https://nodejs.org) 22.12+ (Electron 45 and its downloader require it; the web version and `npm test` at the repo root only need Node 18+) and internet for the first `npm install` (it downloads Electron).
 
 ## Run it
 
@@ -41,7 +41,7 @@ Electron and electron-builder are pinned to current majors; Electron gets its se
 
 - **Sandboxed window:** context isolation, OS sandbox (`app.enableSandbox()`), no Node in the page, no `<webview>`, web security on, DevTools off in installed builds (still available with `npm start`).
 - **Locked to its own page:** navigation, redirects and pop-ups to anything else are blocked, for every window.
-- **Offline for real:** any `http(s)`/`ws(s)`/`ftp` request is cancelled, and a Content-Security-Policy (set in `index.html`, tested to match `security.js`) allows only the app's own script and style files, with no inline code or `eval`.
+- **Offline for real:** any `http(s)`/`ws(s)`/`ftp` request is cancelled, and a Content-Security-Policy (added to the desktop copy of `index.html` by `prepare.js`, so the plain web version is unaffected) allows only the app's own script and style files, with no inline code or `eval`.
 - **No permissions:** camera, microphone, location, notifications etc. are always denied.
 - **Hardened installer:** electron-builder flips Electron "fuses" so the packaged app can't be run as plain Node (`ELECTRON_RUN_AS_NODE`), ignores `NODE_OPTIONS`/`--inspect`, and only loads (integrity-checked) code from its `app.asar`.
 - **Single instance:** a second launch focuses the existing window.

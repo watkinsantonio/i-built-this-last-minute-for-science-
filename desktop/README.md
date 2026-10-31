@@ -43,7 +43,7 @@ Electron and electron-builder are pinned to current majors; Electron gets its se
 - **Locked to its own page:** navigation, redirects and pop-ups to anything else are blocked, for every window.
 - **Offline for real:** any `http(s)`/`ws(s)`/`ftp` request is cancelled, and a Content-Security-Policy (added to the desktop copy of `index.html` by `prepare.js`, so the plain web version is unaffected) allows only the app's own script and style files, with no inline code or `eval`.
 - **No permissions:** camera, microphone, location, notifications etc. are always denied.
-- **Hardened installer:** electron-builder flips Electron "fuses" so the packaged app can't be run as plain Node (`ELECTRON_RUN_AS_NODE`), ignores `NODE_OPTIONS`/`--inspect`, and only loads (integrity-checked) code from its `app.asar`.
+- **Hardened installer:** electron-builder flips Electron "fuses" so the packaged app can't be run as plain Node (`ELECTRON_RUN_AS_NODE`), ignores `NODE_OPTIONS`/`--inspect`, and only loads code from its `app.asar`. The asar-integrity fuse is **off** until an installed build has been launched once (see the checklist), because a mismatch would stop the installed app from starting.
 - **Single instance:** a second launch focuses the existing window.
 - Not included: code signing (needs a paid certificate) and auto-update. Installers are unsigned, see above.
 - The icon, window hardening and fuses have only been checked by unit tests and `node --check`; they have **not** been run in a real Electron window or installer build.
@@ -51,9 +51,10 @@ Electron and electron-builder are pinned to current majors; Electron gets its se
 ## First-run checklist (not yet done by anyone)
 
 1. `npm start`, then press Ctrl+Shift+I (Cmd+Opt+I on Mac) → Console. MathPath should be styled and playable, with **no** "Content Security Policy" errors. If the page is blank or unstyled, the policy's `'self'` is not matching `file://` in your Electron version: loosen `script-src`/`style-src` in `security.js` (e.g. add `file:`) and tell us.
-2. Check the window and taskbar show the new icon.
-3. `npm run dist:win` (or `dist:mac`/`dist:linux`), install and launch the result. If the **installed** app will not start, remove `enableEmbeddedAsarIntegrityValidation` from `FUSES` in `security.js` and from `build.electronFuses` in `package.json` (a test keeps them equal), rebuild, and report it. That fuse only has an effect on Windows and macOS.
-4. Deleting any of the `electronFuses` entries is safe; they only harden the packaged app.
+2. Check the window and taskbar show the new icon. Also look at the icon at 16–32 px (the taskbar size): the thin strokes and the ÷ dots may be hard to read there.
+3. `npm run dist:win` (or `dist:mac`/`dist:linux`), install and launch the result. Check that the built `.ico`/`.icns` looks right.
+4. Once step 3 has worked on a platform, you can turn on `enableEmbeddedAsarIntegrityValidation` in both `FUSES` in `security.js` and `build.electronFuses` in `package.json` (a test keeps them equal), rebuild, and launch the installed app again. It only has an effect on Windows and macOS. If the installed app will not start with it on, turn it back off and report it.
+5. Deleting any of the `electronFuses` entries is safe; they only harden the packaged app.
 
 ## Linux note
 

@@ -40,7 +40,9 @@ const FUSES = {
   runAsNode: false,
   enableNodeOptionsEnvironmentVariable: false,
   enableNodeCliInspectArguments: false,
-  enableEmbeddedAsarIntegrityValidation: true,
+  // Off until an installed build has been launched once: if the integrity
+  // data does not match, the installed app refuses to start.
+  enableEmbeddedAsarIntegrityValidation: false,
   onlyLoadAppFromAsar: true,
 };
 

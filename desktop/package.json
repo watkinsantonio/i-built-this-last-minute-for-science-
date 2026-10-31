@@ -11,7 +11,8 @@
     "dist": "node prepare.js && electron-builder",
     "dist:win": "node prepare.js && electron-builder --win",
     "dist:mac": "node prepare.js && electron-builder --mac",
-    "dist:linux": "node prepare.js && electron-builder --linux"
+    "dist:linux": "node prepare.js && electron-builder --linux",
+    "icon": "node make-icon.js"
   },
   "devDependencies": {
     "electron": "^45.2.1",
@@ -20,10 +21,38 @@
   "build": {
     "appId": "com.mathpath.desktop",
     "productName": "MathPath",
-    "files": ["main.js", "nav.js", "app/**/*", "package.json"],
-    "directories": { "output": "dist" },
-    "win": { "target": "nsis" },
-    "mac": { "target": "dmg", "category": "public.app-category.education" },
-    "linux": { "target": "AppImage", "category": "Education" }
+    "files": [
+      "main.js",
+      "nav.js",
+      "security.js",
+      "assets/icon.png",
+      "app/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.png"
+    },
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.education",
+      "icon": "assets/icon.png"
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "Education",
+      "icon": "assets/icon.png"
+    },
+    "asar": true,
+    "electronFuses": {
+      "runAsNode": false,
+      "enableNodeOptionsEnvironmentVariable": false,
+      "enableNodeCliInspectArguments": false,
+      "enableEmbeddedAsarIntegrityValidation": true,
+      "onlyLoadAppFromAsar": true
+    }
   }
 }

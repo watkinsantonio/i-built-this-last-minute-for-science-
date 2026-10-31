@@ -22,3 +22,8 @@ Tip for presenting: press F11 for full screen. The text is large for projectors.
 - `app.js`, `style.css`, `index.html` – the UI
 - `quiz.test.js` – tests: `npm test` (Node 18+)
 - `serve.js` – optional zero-dependency static server
+
+## Other apps in this repo
+
+- `winery/` – Winery Finder (`npm run start:winery`)
+- `poll/` – Live Poll, a live audience vote for presentations (`npm run start:poll`); see `poll/README.md`

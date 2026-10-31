@@ -2,8 +2,9 @@
 // Security settings for the MathPath desktop window. Kept free of Electron
 // imports so they can be unit-tested with plain Node.
 
-// Same policy is set as a <meta> tag in the root index.html (file:// pages get
-// no HTTP headers); a test keeps the two in sync. Own scripts and styles only:
+// Applied to the desktop copy of index.html by prepare.js (file:// pages get
+// no HTTP headers). The root index.html deliberately has none, so the plain
+// web version is unaffected. Own scripts and styles only:
 // no inline script, no eval, no network, no plugins.
 const CSP = [
   "default-src 'none'",

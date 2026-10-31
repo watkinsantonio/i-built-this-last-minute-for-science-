@@ -27,8 +27,14 @@ npm run dist:linux   # Linux .AppImage
 The installer lands in `desktop/dist/`. Double-click it to install MathPath like any other app.
 It is unsigned, so Windows SmartScreen / macOS Gatekeeper will warn the first time (choose "More info → Run anyway" on Windows, right-click → Open on Mac).
 
+## Status
+
+The tests and file-copy step are automated. The Electron window and the installer builds (`npm start`, `npm run dist:*`) have **not been run yet**: they were written in an environment that could not download Electron or open a window. If either fails on your machine, please report the error message.
+
+Electron and electron-builder are pinned to current majors; Electron gets its security fixes through new releases, so bump `electron` in `package.json` periodically and rebuild.
+
 ## Notes
 
-- The window can only show MathPath's own page; links and pop-ups are blocked, and Node is not exposed to the page.
+- The window can only show MathPath's own page; links, redirects and pop-ups are blocked, and Node is not exposed to the page.
 - Best scores are saved in the app's own storage (per user, per machine).
 - Tests: `npm test` from the repo root also covers `desktop/` (it does not need Electron installed).

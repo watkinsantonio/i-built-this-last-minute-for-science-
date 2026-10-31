@@ -20,9 +20,11 @@ function createWindow() {
     },
   });
   win.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
-  win.webContents.on('will-navigate', (event, url) => {
+  const guard = (event, url) => {
     if (!isAllowedNavigation(url, INDEX)) event.preventDefault();
-  });
+  };
+  win.webContents.on('will-navigate', guard);
+  win.webContents.on('will-redirect', guard);
   win.loadFile(INDEX);
 }
 

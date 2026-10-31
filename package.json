@@ -6,6 +6,8 @@
   "scripts": {
     "test": "node --test",
     "start": "node serve.js",
-    "start:winery": "node winery/server.js"
+    "start:winery": "node winery/server.js",
+    "start:food": "node food/server.js",
+    "desktop": "cd desktop && npm install && npm start"
   }
 }

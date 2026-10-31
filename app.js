@@ -17,6 +17,13 @@
     return n;
   }
 
+  // Set through the DOM (not a style="" attribute) so the page's Content-Security-Policy can forbid inline styles.
+  function progressFill(fraction) {
+    var n = el('div');
+    n.style.width = fraction * 100 + '%';
+    return n;
+  }
+
   function render(nodes) {
     app.textContent = '';
     nodes.forEach(function (n) { app.appendChild(n); });
@@ -91,7 +98,7 @@
           el('span', { text: 'Question ' + (s.answered + 1) + ' / ' + s.length }),
           el('span', { text: 'Level ' + s.level + '   Score ' + s.score }),
         ]),
-        el('div', { class: 'progress' }, [el('div', { style: 'width:' + (s.answered / s.length) * 100 + '%' })]),
+        el('div', { class: 'progress' }, [progressFill(s.answered / s.length)]),
         el('div', { class: 'problem', text: s.current.prompt + ' = ?' }),
         el('div', { class: 'row' }, [
           input,
